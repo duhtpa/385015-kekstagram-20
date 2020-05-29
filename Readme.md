@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
-* Студент: [Александр Дорошенко](https://up.htmlacademy.ru/javascript/20/user/385015).
-* Наставник: [Екатерина Кащенко](https://htmlacademy.ru/profile/id109008).
+* Студент: [Александр Дорошенко] (https://up.htmlacademy.ru/javascript/20/user/385015).
+* Наставник: [Екатерина Кащенко] (https://htmlacademy.ru/profile/id109008).
 
 ---
 
