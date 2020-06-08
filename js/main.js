@@ -40,9 +40,9 @@ var getPhotoElement = function (photo) {
 var getPhoto = function (i) {
   var photo = {
     url: 'photos/' + i + '.jpg',
-    description: 'Описание: №' + i, // это нужно писать в alt???
+    description: 'Описание: №' + i,
     likes: getRandomInteger(15, 200),
-    comments: getPhotoComments(getRandomInteger(1, 6))
+    comments: getPhotoComments(getRandomInteger(0, 6))
   };
 
   return photo;
@@ -53,7 +53,7 @@ var getPhotoComments = function (countComments) {
 
   for (var i = 0; i < countComments; i++) {
     var comment = {
-      avatar: 'img/avatar-' + getRandomInteger(0, 6) + '.svg',
+      avatar: 'img/avatar-' + getRandomInteger(0.5, 5) + '.svg',
       message: COMMENTS[getRandomInteger(0, COMMENTS.length - 1)],
       name: USERS[getRandomInteger(0, USERS.length - 1)]
     };
@@ -65,10 +65,12 @@ var getPhotoComments = function (countComments) {
 };
 
 var fragment = document.createDocumentFragment();
+var photoArray = [];
 
 var renderPhotos = function (count) {
   for (var i = 1; i <= count; i++) {
     getPhoto(i);
+    photoArray.push(getPhoto(i));
     fragment.appendChild(getPhotoElement(getPhoto(i)));
   }
 
@@ -76,3 +78,37 @@ var renderPhotos = function (count) {
 };
 
 renderPhotos(PHOTO_COUNT);
+
+document.querySelector('body').classList.add('modal-open');
+
+var photoBig = document.querySelector('.big-picture');
+photoBig.classList.remove('hidden');
+
+var renderPhotoBig = function (photoArrayElement) {
+  photoBig.querySelector('.big-picture__img > img').src = photoArrayElement.url;
+  photoBig.querySelector('.likes-count').textContent = photoArrayElement.likes;
+  photoBig.querySelector('.comments-count').textContent = photoArrayElement.comments.length;
+  photoBig.querySelector('.social__caption').textContent = photoArrayElement.description;
+
+  renderComments(photoArrayElement);
+};
+
+var renderComments = function (photoArrayElement) {
+  var photoBigComments = photoBig.querySelector('.social__comments');
+  var photoBigCommentsElements = photoBigComments.children;
+
+  for (var i = photoBigCommentsElements.length - 1; i >= 0; i--) {
+    photoBigComments.removeChild(photoBigCommentsElements[i]);
+  }
+
+  for (var j = 0; j < photoArrayElement.comments.length; j++) {
+    var commentData = photoArrayElement.comments[j];
+    var commentMarkup = '<li class="social__comment"><img class="social__picture" src="' + commentData.avatar + '" alt="' + commentData.name + '" width="35" height="35"> <p class="social__text">' + commentData.message + '</p></li>';
+    photoBigComments.insertAdjacentHTML('beforeend', commentMarkup);
+  }
+};
+
+photoBig.querySelector('.social__comment-count').classList.add('hidden');
+photoBig.querySelector('.comments-loader').classList.add('hidden');
+
+renderPhotoBig(photoArray[0]);
