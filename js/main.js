@@ -151,3 +151,52 @@ btnOpenPopup.addEventListener('change', function () {
 btnClosePopup.addEventListener('click', function () {
   closePopup();
 });
+
+var effects = document.querySelectorAll('.effects__radio');
+var popupPreview = document.querySelector('.img-upload__preview > img');
+var effectLevel = document.querySelector('.effect-level__value');
+
+var changeEffect = function (evt) {
+  popupPreview.classList = '';
+
+  if (evt.target.value === 'none') {
+    popupPreview.classList = '';
+  } else {
+    popupPreview.classList.add('effects__preview--' + evt.target.value);
+  }
+
+  effectLevel.value = 100;
+};
+
+for (var i = 0; i < effects.length; i++) {
+  effects[i].addEventListener('click', changeEffect);
+}
+
+var sliderControl = document.querySelector('.effect-level__pin');
+sliderControl.addEventListener('mouseup', function () {
+  effectLevel.value = 20; // здесь будет расчёт уровня эффекта
+});
+
+var btnScaleSmaller = document.querySelector('.scale__control--smaller');
+var btnScaleBigger = document.querySelector('.scale__control--bigger');
+var scaleValue = document.querySelector('.scale__control--value').value;
+
+scaleValue = 100;
+
+btnScaleSmaller.addEventListener('click', function () {
+  if (scaleValue >= 50) {
+    scaleValue -= 25;
+  }
+  setPopupScale();
+});
+
+btnScaleBigger.addEventListener('click', function () {
+  if (scaleValue <= 75) {
+    scaleValue += 25;
+  }
+  setPopupScale();
+});
+
+var setPopupScale = function () {
+  popupPreview.style.transform = 'scale(' + scaleValue / 100 + ')';
+};
