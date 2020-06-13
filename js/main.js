@@ -75,10 +75,10 @@ var renderFragment = function (photosArray) {
 
 renderFragment(photos);
 
-document.querySelector('body').classList.add('modal-open');
+// document.querySelector('body').classList.add('modal-open');
 
 var photoBig = document.querySelector('.big-picture');
-photoBig.classList.remove('hidden');
+// photoBig.classList.remove('hidden');
 
 var renderPhotoBig = function (photo) {
   photoBig.querySelector('.big-picture__img > img').src = photo.url;
@@ -116,3 +116,38 @@ photoBig.querySelector('.social__comment-count').classList.add('hidden');
 photoBig.querySelector('.comments-loader').classList.add('hidden');
 
 renderPhotoBig(photos[0]);
+
+var popup = document.querySelector('.img-upload__overlay');
+var btnOpenPopup = document.querySelector('#upload-file');
+var btnClosePopup = document.querySelector('#upload-cancel');
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === 27) {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  popup.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  popup.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+
+  document.removeEventListener('keydown', onPopupEscPress);
+
+  btnOpenPopup.value = '';
+};
+
+btnOpenPopup.addEventListener('change', function () {
+  openPopup();
+});
+
+btnClosePopup.addEventListener('click', function () {
+  closePopup();
+});
