@@ -155,14 +155,17 @@ btnClosePopup.addEventListener('click', function () {
 var effects = document.querySelectorAll('.effects__radio');
 var popupPreview = document.querySelector('.img-upload__preview > img');
 var effectLevel = document.querySelector('.effect-level__value');
+var barEffectLevel = document.querySelector('.img-upload__effect-level');
 
 var changeEffect = function (evt) {
   popupPreview.classList = '';
 
   if (evt.target.value === 'none') {
     popupPreview.classList = '';
+    barEffectLevel.classList.add('hidden');
   } else {
     popupPreview.classList.add('effects__preview--' + evt.target.value);
+    barEffectLevel.classList.remove('hidden');
   }
 
   effectLevel.value = 100;
