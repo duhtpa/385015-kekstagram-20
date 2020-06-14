@@ -181,18 +181,22 @@ var btnScaleSmaller = document.querySelector('.scale__control--smaller');
 var btnScaleBigger = document.querySelector('.scale__control--bigger');
 var scaleValue = document.querySelector('.scale__control--value').value;
 
-scaleValue = 100;
+var SCALE_STEP = 25;
+var SCALE_MIN = 25;
+var SCALE_MAX = 100;
+
+scaleValue = SCALE_MAX;
 
 btnScaleSmaller.addEventListener('click', function () {
-  if (scaleValue >= 50) {
-    scaleValue -= 25;
+  if (scaleValue >= SCALE_MIN + SCALE_STEP) {
+    scaleValue -= SCALE_STEP;
   }
   setPopupScale();
 });
 
 btnScaleBigger.addEventListener('click', function () {
-  if (scaleValue <= 75) {
-    scaleValue += 25;
+  if (scaleValue <= SCALE_MAX - SCALE_STEP) {
+    scaleValue += SCALE_STEP;
   }
   setPopupScale();
 });
@@ -200,3 +204,76 @@ btnScaleBigger.addEventListener('click', function () {
 var setPopupScale = function () {
   popupPreview.style.transform = 'scale(' + scaleValue / 100 + ')';
 };
+
+var inputHashtag = document.querySelector('.text__hashtags');
+
+var HASHTAGS_MIN_SYMBOLS_COUNT = 2;
+var HASHTAGS_MAX_SYMBOLS_COUNT = 20;
+var HASHTAGS_MAX_COUNT = 5;
+
+inputHashtag.addEventListener('input', function (evt) {
+  var hashtagsArray = evt.target.value.toLowerCase().split(' ').sort();
+
+  for (var j = 0; j < hashtagsArray.length; j++) {
+    var hashtag = hashtagsArray[j];
+
+    if (!hashtag.match(/^([#])([0-9a-zA-Zа-яёА-ЯЁ]{1,19})$/g)) {
+      evt.target.setCustomValidity('Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д.');
+
+      return;
+    }
+
+    if (hashtag.indexOf('#', 0) !== 0) {
+      evt.target.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
+
+      return;
+    }
+
+    if (hashtag.length < HASHTAGS_MIN_SYMBOLS_COUNT) {
+      evt.target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
+
+      return;
+    }
+
+    if (hashtag.length > HASHTAGS_MAX_SYMBOLS_COUNT) {
+      evt.target.setCustomValidity('Хэш-тег не может быть длинее 20 символов');
+
+      return;
+    }
+
+    if (findDuplicateElements(hashtagsArray) === true) {
+      evt.target.setCustomValidity('Один хештег не может быть использован дважды');
+
+      return;
+    }
+
+    if (hashtagsArray.length > HASHTAGS_MAX_COUNT) {
+      evt.target.setCustomValidity('Вы ввели более 5 хэш-тегов!');
+
+      return;
+    }
+
+    evt.target.setCustomValidity('');
+  }
+});
+
+var findDuplicateElements = function (hashtagsArray) {
+  var findDublicate = false;
+  for (var l = 0; l < hashtagsArray.length - 1; l++) {
+    if (hashtagsArray[l] === hashtagsArray[++l]) {
+      findDublicate = true;
+    } else {
+      findDublicate = false;
+    }
+  }
+
+  return findDublicate;
+};
+
+inputHashtag.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+
+inputHashtag.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+});
