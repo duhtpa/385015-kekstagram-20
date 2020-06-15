@@ -171,17 +171,22 @@ var changeEffect = function (evt) {
   effectLevel.value = 100;
 };
 
-for (var i = 0; i < effects.length; i++) {
-  effects[i].addEventListener('click', changeEffect);
-}
+var listenChangeEffect = function () {
+  barEffectLevel.classList.add('hidden');
+  for (var i = 0; i < effects.length; i++) {
+    effects[i].addEventListener('click', changeEffect);
+  }
+};
 
 var sliderControl = document.querySelector('.effect-level__pin');
 sliderControl.addEventListener('mouseup', function () {
   effectLevel.value = 20; // здесь будет расчёт уровня эффекта
 });
 
-var btnScaleSmaller = document.querySelector('.scale__control--smaller');
-var btnScaleBigger = document.querySelector('.scale__control--bigger');
+listenChangeEffect();
+
+// var btnScaleSmaller = document.querySelector('.scale__control--smaller');
+// var btnScaleBigger = document.querySelector('.scale__control--bigger');
 var scaleValue = document.querySelector('.scale__control--value').value;
 
 var SCALE_STEP = 25;
@@ -190,19 +195,33 @@ var SCALE_MAX = 100;
 
 scaleValue = SCALE_MAX;
 
-btnScaleSmaller.addEventListener('click', function () {
-  if (scaleValue >= SCALE_MIN + SCALE_STEP) {
-    scaleValue -= SCALE_STEP;
+document.querySelector('.img-upload__scale').addEventListener('click', function (evt) {
+  if (evt.target.textContent === 'Уменьшить') {
+    if (scaleValue >= SCALE_MIN + SCALE_STEP) {
+      scaleValue -= SCALE_STEP;
+    }
+    setPopupScale();
+  } else if (evt.target.textContent === 'Увеличить') {
+    if (scaleValue <= SCALE_MAX - SCALE_STEP) {
+      scaleValue += SCALE_STEP;
+    }
+    setPopupScale();
   }
-  setPopupScale();
 });
 
-btnScaleBigger.addEventListener('click', function () {
-  if (scaleValue <= SCALE_MAX - SCALE_STEP) {
-    scaleValue += SCALE_STEP;
-  }
-  setPopupScale();
-});
+// btnScaleSmaller.addEventListener('click', function () {
+//   if (scaleValue >= SCALE_MIN + SCALE_STEP) {
+//     scaleValue -= SCALE_STEP;
+//   }
+//   setPopupScale();
+// });
+
+// btnScaleBigger.addEventListener('click', function () {
+//   if (scaleValue <= SCALE_MAX - SCALE_STEP) {
+//     scaleValue += SCALE_STEP;
+//   }
+//   setPopupScale();
+// });
 
 var setPopupScale = function () {
   popupPreview.style.transform = 'scale(' + scaleValue / 100 + ')';
@@ -222,48 +241,59 @@ inputHashtag.addEventListener('input', function (evt) {
 
     if (!hashtag.match(/^([#])([0-9a-zA-Zа-яёА-ЯЁ]{1,19})$/g)) {
       evt.target.setCustomValidity('Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д.');
+      setBorderError(evt.target);
 
       return;
     }
 
     if (hashtag.indexOf('#', 0) !== 0) {
       evt.target.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
+      setBorderError(evt.target);
 
       return;
     }
 
     if (hashtag.length < HASHTAGS_MIN_SYMBOLS_COUNT) {
       evt.target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
+      setBorderError(evt.target);
 
       return;
     }
 
     if (hashtag.length > HASHTAGS_MAX_SYMBOLS_COUNT) {
       evt.target.setCustomValidity('Хэш-тег не может быть длинее 20 символов');
+      setBorderError(evt.target);
 
       return;
     }
 
     if (findDuplicateElements(hashtagsArray) === true) {
       evt.target.setCustomValidity('Один хештег не может быть использован дважды');
+      setBorderError(evt.target);
 
       return;
     }
 
     if (hashtagsArray.length > HASHTAGS_MAX_COUNT) {
       evt.target.setCustomValidity('Вы ввели более 5 хэш-тегов!');
+      setBorderError(evt.target);
 
       return;
     }
 
     evt.target.setCustomValidity('');
+    evt.target.style.border = '';
   }
 });
 
+var setBorderError = function (element) {
+  element.style.border = '3px dashed red';
+};
+
 var findDuplicateElements = function (hashtagsArray) {
   var findDublicate = false;
-  for (var l = 0; l < hashtagsArray.length - 1; l++) {
-    if (hashtagsArray[l] === hashtagsArray[++l]) {
+  for (var i = 0; i < hashtagsArray.length - 1; i++) {
+    if (hashtagsArray[i] === hashtagsArray[++i]) {
       findDublicate = true;
     } else {
       findDublicate = false;
