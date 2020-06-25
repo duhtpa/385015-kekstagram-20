@@ -1,10 +1,7 @@
 'use strict';
 
 (function () {
-  // document.querySelector('body').classList.add('modal-open');
-
   var photoBig = document.querySelector('.big-picture');
-  // photoBig.classList.remove('hidden');
 
   var renderPhotoBig = function (photo) {
     photoBig.querySelector('.big-picture__img > img').src = photo.url;
@@ -41,5 +38,5 @@
   photoBig.querySelector('.social__comment-count').classList.add('hidden');
   photoBig.querySelector('.comments-loader').classList.add('hidden');
 
-  renderPhotoBig(window.gallery.photos[0]);
+  renderPhotoBig(window.gallery.dataLoad[0]);
 })();
