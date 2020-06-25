@@ -17,10 +17,6 @@
   };
 
   var successHandler = function (photosArray) {
-    window.gallery = {
-      dataLoad: photosArray
-    };
-
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < PHOTO_COUNT; i++) {
       fragment.appendChild(getPhotoElement(photosArray[i]));

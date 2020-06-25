@@ -15,10 +15,6 @@
       }
     });
 
-    // xhr.addEventListener('error', function () {
-    //   onError('Произошла ошибка соединения');
-    // });
-
     xhr.timeout = TIMEOUT_IN_MS;
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
@@ -27,6 +23,7 @@
   };
 
   window.backend = {
+    dataLoad: [],
     load: function (onLoad, onError) {
       var URL = 'https://javascript.pages.academy/kekstagram/data';
 
@@ -37,6 +34,8 @@
 
       xhr.open('GET', URL);
       xhr.send();
+
+      window.backend.dataLoad = xhr;
     },
     save: function (data, onLoad, onError) {
       var URL = 'https://javascript.pages.academy/kekstagram';

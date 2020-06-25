@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  // console.log(window.backend.dataLoad);
+  // console.log(window.backend.dataLoad.response);
   var photoBig = document.querySelector('.big-picture');
 
   var renderPhotoBig = function (photo) {
@@ -38,5 +40,5 @@
   photoBig.querySelector('.social__comment-count').classList.add('hidden');
   photoBig.querySelector('.comments-loader').classList.add('hidden');
 
-  renderPhotoBig(window.gallery.dataLoad[0]);
+  renderPhotoBig(window.backend.dataLoad);
 })();
