@@ -1,11 +1,18 @@
 'use strict';
 
 (function () {
-  var isError = function (xhr, onLoad, onError) {
-    var StatusCode = {
-      OK: 200
-    };
-    var TIMEOUT_IN_MS = 10000;
+  var Url = {
+    FROM_LOAD: 'https://javascript.pages.academy/kekstagram/data',
+    FROM_SAVE: 'https://javascript.pages.academy/kekstagram'
+  };
+  var StatusCode = {
+    OK: 200
+  };
+  var TIMEOUT_IN_MS = 10000;
+
+  var isError = function (onLoad, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
@@ -20,34 +27,23 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
+    return xhr;
+  };
+
+  var load = function (onLoad, onError) {
+    var xhr = isError(onLoad, onError);
+    xhr.open('GET', Url.FROM_LOAD);
+    xhr.send();
+  };
+
+  var save = function (data, onLoad, onError) {
+    var xhr = isError(onLoad, onError);
+    xhr.open('POST', Url.FROM_SAVE);
+    xhr.send(data);
   };
 
   window.backend = {
-    dataLoad: [],
-    load: function (onLoad, onError) {
-      var URL = 'https://javascript.pages.academy/kekstagram/data';
-
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
-
-      isError(xhr, onLoad, onError);
-
-      xhr.open('GET', URL);
-      xhr.send();
-
-      window.backend.dataLoad = xhr;
-    },
-    save: function (data, onLoad, onError) {
-      var URL = 'https://javascript.pages.academy/kekstagram';
-
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
-
-      isError(xhr, onLoad, onError);
-
-      xhr.open('POST', URL);
-      xhr.send(data);
-    },
+    load: load,
+    save: save
   };
-
 })();
