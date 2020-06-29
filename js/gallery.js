@@ -1,25 +1,6 @@
 'use strict';
 
 (function () {
-  var PHOTO_COUNT = 25;
-
-  var COMMENTS = [
-    'Всё отлично!',
-    'В целом всё неплохо. Но не всё.',
-    'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-    'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-    'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-    'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-  ];
-
-  var USERS = [
-    'Алексей Нефёдов',
-    'Михайл Остров',
-    'Посетитель',
-    'Алёна Павлова',
-    'Рустам Айдахов'
-  ];
-
   var pictures = document.querySelector('.pictures');
   var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -33,44 +14,33 @@
     return photoElement;
   };
 
-  var getPhotoComments = function (countComments) {
-    var arrComments = [];
-    for (var i = 0; i < countComments; i++) {
-      arrComments.push({
-        avatar: 'img/avatar-' + window.util.getRandomInteger(1, 5) + '.svg',
-        message: COMMENTS[window.util.getRandomInteger(0, COMMENTS.length - 1)],
-        name: USERS[window.util.getRandomInteger(0, USERS.length - 1)]
-      });
-    }
-    return arrComments;
-  };
 
-  var getPhotosArray = function (count) {
-    var photoArray = [];
-    for (var i = 0; i <= count - 1; i++) {
-      photoArray.push({
-        url: 'photos/' + parseInt(i + 1, 10) + '.jpg',
-        description: 'Описание: №' + parseInt(i + 1, 10),
-        likes: window.util.getRandomInteger(15, 200),
-        comments: getPhotoComments(window.util.getRandomInteger(0, 6))
-      });
-    }
-    return photoArray;
-  };
-
-  var photos = getPhotosArray(PHOTO_COUNT);
-
-  var renderFragment = function (photosArray) {
+  var successHandler = function (photosArray) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photosArray.length - 1; i++) {
+    for (var i = 0; i < photosArray.length; i++) {
       fragment.appendChild(getPhotoElement(photosArray[i]));
     }
     pictures.appendChild(fragment);
+
+    var xhrPhotos = photosArray;
+
+    window.picture.renderPhotoBig(xhrPhotos);
   };
 
-  renderFragment(photos);
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'fixed';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '20px';
+    node.style.height = '30px';
+    node.style.paddingTop = '4px';
+    node.style.textTransform = 'initial';
 
-  window.gallery = {
-    photos: photos
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
   };
+
+  window.backend.load(successHandler, errorHandler);
 })();
