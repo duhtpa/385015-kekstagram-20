@@ -16,7 +16,10 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
-        onLoad(xhr.response);
+        var xhrResponse = xhr.response;
+
+        onLoad(xhrResponse);
+        document.querySelector('.img-filters').classList.remove('img-filters--inactive');
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
