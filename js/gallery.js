@@ -27,8 +27,19 @@
   };
 
   var errorHandler = function (errorMessage) {
+    var message = errorMessage;
+    showMessage(message, 'red');
+  };
+
+  var loadHandler = function () {
+    var message = 'Идёт загрузка данных! Не нужно жмякать 100500 раз по фильтру!';
+    showMessage(message, 'green');
+  };
+
+  var showMessage = function (message, evtColor) {
     var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.classList.add('message');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: ' + evtColor;
     node.style.position = 'fixed';
     node.style.left = 0;
     node.style.right = 0;
@@ -37,7 +48,7 @@
     node.style.paddingTop = '4px';
     node.style.textTransform = 'initial';
 
-    node.textContent = errorMessage;
+    node.textContent = message;
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
@@ -46,7 +57,11 @@
   // ФИЛЬТР "ОБСУЖДАЕМЫЕ"
   var elementMostDiscussed = document.querySelector('#filter-discussed');
   elementMostDiscussed.addEventListener('click', function () {
-    window.backend.load(sortArray, errorHandler);
+    removePictures();
+
+    checkMultiMessage();
+
+    window.debounce(sortArray, errorHandler);
 
     var filters = document.querySelectorAll('.img-filters__button');
     filters.forEach(function (it) {
@@ -59,7 +74,10 @@
   var elementFilterDefault = document.querySelector('#filter-default');
   elementFilterDefault.addEventListener('click', function () {
     removePictures();
-    window.backend.load(successHandler, errorHandler);
+
+    checkMultiMessage();
+
+    window.debounce(successHandler, errorHandler);
 
     var filters = document.querySelectorAll('.img-filters__button');
     filters.forEach(function (it) {
@@ -71,7 +89,12 @@
   // ФИЛЬТР "СЛУЧАЙНЫЕ"
   var elementFilterRandom = document.querySelector('#filter-random');
   elementFilterRandom.addEventListener('click', function () {
-    window.backend.load(randomArray, errorHandler);
+    removePictures();
+
+    checkMultiMessage();
+
+    window.debounce(randomArray, errorHandler);
+
     var filters = document.querySelectorAll('.img-filters__button');
     filters.forEach(function (it) {
       it.classList.remove('img-filters__button--active');
@@ -79,6 +102,13 @@
 
     elementFilterRandom.classList.add('img-filters__button--active');
   });
+
+  var checkMultiMessage = function () {
+    var messagePopup = document.querySelector('.message');
+    if (messagePopup) {
+      document.querySelector('body').removeChild(messagePopup);
+    }
+  };
 
   var sortArray = function (photosArray) {
     var namesComparator = function (left, right) {
@@ -100,7 +130,6 @@
       return rankDiff;
     });
 
-    removePictures();
     successHandler(photosArray);
   };
 
@@ -121,7 +150,6 @@
       arrRandomelements.push(elementRandom[0]);
     }
 
-    removePictures();
     successHandler(arrRandomelements);
   };
 
@@ -129,8 +157,11 @@
     var picturesByDel = document.querySelectorAll('.picture');
 
     for (var i = 0; i < picturesByDel.length; i++) {
-      console.log(picturesByDel[i]);
       pictures.removeChild(picturesByDel[i]);
     }
+  };
+
+  window.gallery = {
+    loadHandler: loadHandler
   };
 })();

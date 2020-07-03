@@ -15,14 +15,17 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
+      // window.debounce(function () {
       if (xhr.status === StatusCode.OK) {
         var xhrResponse = xhr.response;
-
+        //   onLoad(xhrResponse);
         onLoad(xhrResponse);
+
         document.querySelector('.img-filters').classList.remove('img-filters--inactive');
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
+      // });
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
