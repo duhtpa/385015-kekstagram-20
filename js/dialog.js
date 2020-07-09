@@ -42,5 +42,4 @@
   inputHashtag.addEventListener('blur', function () {
     document.addEventListener('keydown', onPopupEscPress);
   });
-
 })();

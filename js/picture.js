@@ -3,8 +3,9 @@
 (function () {
 
   window.picture = {
-    renderPhotoBig: function (photos) {
-      var photo = photos[5];
+    renderPhotoBig: function (photo) {
+      // var photo = photos[5];
+      // console.log(photo);
 
       photoBig.querySelector('.big-picture__img > img').src = photo.url;
       photoBig.querySelector('.likes-count').textContent = photo.likes;
@@ -12,9 +13,26 @@
       photoBig.querySelector('.social__caption').textContent = photo.description;
 
       renderComments(photo);
+
+      photoBig.classList.remove('hidden');
+
+      photoBigClose.addEventListener('click', closePopup);
+      document.addEventListener('keydown', closePopupEscPress);
     }
   };
+
+  var closePopup = function () {
+    photoBig.classList.add('hidden');
+    photoBigClose.removeEventListener('click', closePopup);
+    document.removeEventListener('keydown', closePopupEscPress);
+  };
+
+  var closePopupEscPress = function (evt) {
+    window.util.isKeyBoardEvent(evt, closePopup);
+  };
+
   var photoBig = document.querySelector('.big-picture');
+  var photoBigClose = photoBig.querySelector('.big-picture__cancel');
 
   var renderComments = function (photoArrayElement) {
     var photoBigComments = photoBig.querySelector('.social__comments');
@@ -41,6 +59,4 @@
 
   photoBig.querySelector('.social__comment-count').classList.add('hidden');
   photoBig.querySelector('.comments-loader').classList.add('hidden');
-
-  // photoBig.classList.remove('hidden'); // отображение без условия и события
 })();

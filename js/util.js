@@ -7,7 +7,7 @@
       return Math.round(rand);
     },
 
-    isEscEvent: function (evt, action) {
+    isKeyBoardEvent: function (evt, action) {
       if (evt.key === 'Escape') {
         action();
       }

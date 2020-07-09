@@ -23,7 +23,27 @@
 
     var xhrPhotos = photosArray;
 
-    window.picture.renderPhotoBig(xhrPhotos);
+    pictures.addEventListener('click', function (evt) {
+      var strForSearch = evt.target.src;
+      getTargetElement(strForSearch, xhrPhotos);
+    });
+
+    pictures.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Enter') {
+        evt.preventDefault();
+        var strForSearch = evt.target.querySelector('img').src;
+        getTargetElement(strForSearch, xhrPhotos);
+      }
+    });
+  };
+
+  var getTargetElement = function (strForSearch, xhrPhotos) {
+    strForSearch = strForSearch.slice(strForSearch.indexOf('photo'));
+    xhrPhotos.forEach(function (it) {
+      if (it.url === strForSearch) {
+        window.picture.renderPhotoBig(it);
+      }
+    });
   };
 
   var errorHandler = function (errorMessage) {
