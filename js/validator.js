@@ -2,10 +2,25 @@
 
 (function () {
   var inputHashtag = document.querySelector('.text__hashtags');
+  var inputDescription = document.querySelector('.text__description');
 
   var HASHTAGS_MIN_SYMBOLS_COUNT = 2;
   var HASHTAGS_MAX_SYMBOLS_COUNT = 20;
   var HASHTAGS_MAX_COUNT = 5;
+  var DESCRIPTION_MAX_SYMBOLS_COUNT = 140;
+
+  // в разметке я так понимаю ничего мутить не надо...
+  inputDescription.addEventListener('input', function (evt) {
+    if (inputDescription.value.length > DESCRIPTION_MAX_SYMBOLS_COUNT) {
+      evt.target.setCustomValidity('Комментарий не может быть длинее 140 символов');
+      setBorderError(evt.target);
+
+      return;
+    }
+
+    evt.target.setCustomValidity('');
+    evt.target.style.border = '';
+  });
 
   inputHashtag.addEventListener('input', function (evt) {
     var hashtagsArray = evt.target.value.toLowerCase().split(' ').sort();

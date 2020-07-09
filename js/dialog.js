@@ -33,13 +33,17 @@
     closePopup();
   });
 
-  var inputHashtag = document.querySelector('.text__hashtags');
+  // на случай если захотим ещё добавить текстовых полей (автор, дата, прочее)
+  var inputsUpload = document.querySelectorAll('.img-upload__text > input, .img-upload__text > textarea');
 
-  inputHashtag.addEventListener('focus', function () {
-    document.removeEventListener('keydown', onPopupEscPress);
+  inputsUpload.forEach(function (it) {
+    it.addEventListener('focus', function () {
+      document.removeEventListener('keydown', onPopupEscPress);
+    });
+
+    it.addEventListener('blur', function () {
+      document.addEventListener('keydown', onPopupEscPress);
+    });
   });
 
-  inputHashtag.addEventListener('blur', function () {
-    document.addEventListener('keydown', onPopupEscPress);
-  });
 })();

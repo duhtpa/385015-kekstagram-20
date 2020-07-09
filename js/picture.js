@@ -4,9 +4,6 @@
 
   window.picture = {
     renderPhotoBig: function (photo) {
-      // var photo = photos[5];
-      // console.log(photo);
-
       photoBig.querySelector('.big-picture__img > img').src = photo.url;
       photoBig.querySelector('.likes-count').textContent = photo.likes;
       photoBig.querySelector('.comments-count').textContent = photo.comments.length;
@@ -28,7 +25,7 @@
   };
 
   var closePopupEscPress = function (evt) {
-    window.util.isKeyBoardEvent(evt, closePopup);
+    window.util.isEscEvent(evt, closePopup);
   };
 
   var photoBig = document.querySelector('.big-picture');
