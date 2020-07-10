@@ -32,9 +32,11 @@
 
     pictures.addEventListener('keydown', function (evt) {
       if (evt.key === 'Enter') {
-        evt.preventDefault();
-        var srcPicture = evt.target.querySelector('img').src;
-        getTargetElement(srcPicture, xhrPhotos);
+        if (evt.target.classList.value === 'picture') {
+          evt.preventDefault();
+          var srcPicture = evt.target.querySelector('img').src;
+          getTargetElement(srcPicture, xhrPhotos);
+        }
       }
     });
   };
