@@ -24,23 +24,25 @@
     var xhrPhotos = photosArray;
 
     pictures.addEventListener('click', function (evt) {
-      var strForSearch = evt.target.src;
-      getTargetElement(strForSearch, xhrPhotos);
+      if (evt.target.classList.value === 'picture__img') {
+        var srcPicture = evt.target.src;
+        getTargetElement(srcPicture, xhrPhotos);
+      }
     });
 
     pictures.addEventListener('keydown', function (evt) {
       if (evt.key === 'Enter') {
         evt.preventDefault();
-        var strForSearch = evt.target.querySelector('img').src;
-        getTargetElement(strForSearch, xhrPhotos);
+        var srcPicture = evt.target.querySelector('img').src;
+        getTargetElement(srcPicture, xhrPhotos);
       }
     });
   };
 
-  var getTargetElement = function (strForSearch, xhrPhotos) {
-    strForSearch = strForSearch.slice(strForSearch.indexOf('photo'));
+  var getTargetElement = function (srcPicture, xhrPhotos) {
+    srcPicture = srcPicture.slice(srcPicture.indexOf('photo'));
     xhrPhotos.forEach(function (it) {
-      if (it.url === strForSearch) {
+      if (it.url === srcPicture) {
         window.picture.renderPhotoBig(it);
       }
     });
@@ -160,7 +162,7 @@
       var randomElementIndex = Math.floor(Math.random() * array.length);
       return randomElementIndex;
     };
-
+пше 
     var arrRandomelements = [];
 
     for (var i = 0; i < ARRAY_RANDOM_LENGTH; i++) {
