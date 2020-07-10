@@ -27,6 +27,9 @@
       if (evt.target.classList.value === 'picture__img') {
         var srcPicture = evt.target.src;
         getTargetElement(srcPicture, xhrPhotos);
+
+        var bigPictureOverlay = document.querySelector('.big-picture');
+        bigPictureOverlay.scrollTop = 0;
       }
     });
 
