@@ -162,7 +162,7 @@
       var randomElementIndex = Math.floor(Math.random() * array.length);
       return randomElementIndex;
     };
-пше 
+
     var arrRandomelements = [];
 
     for (var i = 0; i < ARRAY_RANDOM_LENGTH; i++) {
