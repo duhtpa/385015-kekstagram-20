@@ -23,7 +23,34 @@
 
     var xhrPhotos = photosArray;
 
-    window.picture.renderPhotoBig(xhrPhotos);
+    pictures.addEventListener('click', function (evt) {
+      if (evt.target.classList.value === 'picture__img') {
+        var srcPicture = evt.target.src;
+        getTargetElement(srcPicture, xhrPhotos);
+
+        var bigPictureOverlay = document.querySelector('.big-picture');
+        bigPictureOverlay.scrollTop = 0;
+      }
+    });
+
+    pictures.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Enter') {
+        if (evt.target.classList.value === 'picture') {
+          evt.preventDefault();
+          var srcPicture = evt.target.querySelector('img').src;
+          getTargetElement(srcPicture, xhrPhotos);
+        }
+      }
+    });
+  };
+
+  var getTargetElement = function (srcPicture, xhrPhotos) {
+    srcPicture = srcPicture.slice(srcPicture.indexOf('photo'));
+    xhrPhotos.forEach(function (it) {
+      if (it.url === srcPicture) {
+        window.picture.renderPhotoBig(it);
+      }
+    });
   };
 
   var errorHandler = function (errorMessage) {
