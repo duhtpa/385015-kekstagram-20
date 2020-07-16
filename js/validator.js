@@ -9,7 +9,6 @@
   var HASHTAGS_MAX_COUNT = 5;
   var DESCRIPTION_MAX_SYMBOLS_COUNT = 140;
 
-  // в разметке я так понимаю ничего мутить не надо...
   inputDescription.addEventListener('input', function (evt) {
     if (inputDescription.value.length > DESCRIPTION_MAX_SYMBOLS_COUNT) {
       evt.target.setCustomValidity('Комментарий не может быть длинее 140 символов');
