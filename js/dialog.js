@@ -23,6 +23,12 @@
     document.removeEventListener('keydown', onPopupEscPress);
 
     btnOpenPopup.value = '';
+
+    var popupPreview = document.querySelector('.img-upload__preview > img');
+    popupPreview.removeAttribute('class');
+    popupPreview.removeAttribute('style');
+
+    document.querySelector('.img-upload__effect-level').classList.add('hidden');
   };
 
   btnOpenPopup.addEventListener('change', function () {

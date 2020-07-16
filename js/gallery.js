@@ -4,9 +4,6 @@
   var pictures = document.querySelector('.pictures');
   var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-  var uploadOverlay = document.querySelector('.img-upload__overlay');
-  uploadOverlay.classList.remove('hidden');
-
   var getPhotoElement = function (photo) {
     var photoElement = photoTemplate.cloneNode(true);
 
@@ -91,21 +88,27 @@
     removePictures();
     checkMultiMessage();
 
-    var array = [];
+    var Filter = {
+      DICUSSED: 'filter-discussed',
+      DEFAULT: 'filter-default',
+      RANDOM: 'filter-random'
+    };
+
+    var filterArray = [];
 
     switch (evt.target.id) {
-      case 'filter-discussed':
-        array = sortArray;
+      case Filter.DICUSSED:
+        filterArray = sortArray;
         break;
-      case 'filter-default':
-        array = successHandler;
+      case Filter.DEFAULT:
+        filterArray = successHandler;
         break;
-      case 'filter-random':
-        array = randomArray;
+      case Filter.RANDOM:
+        filterArray = randomArray;
         break;
     }
 
-    window.debounce(array, errorHandler);
+    window.debounce(filterArray, errorHandler);
 
     var filters = document.querySelectorAll('.img-filters__button');
     filters.forEach(function (it) {

@@ -20,7 +20,7 @@
   var barEffectLevel = document.querySelector('.img-upload__effect-level');
   var sliderLine = document.querySelector('.effect-level__line');
   var sliderLevel = sliderLine.querySelector('.effect-level__depth');
-  var sliderCount = document.querySelector('.effect-level__value').value;
+  var sliderCountValue = document.querySelector('.effect-level__value').value;
   var sliderControl = document.querySelector('.effect-level__pin');
 
   var changeEffect = function (evt) {
@@ -67,9 +67,9 @@
 
     sliderLevel.style.width = sliderControl.style.left;
 
-    sliderCount = Math.round(sliderControl.offsetLeft / LevelSlider.MAX * ConvertLevelSlider.PERCENT);
+    sliderCountValue = Math.round(sliderControl.offsetLeft / LevelSlider.MAX * ConvertLevelSlider.PERCENT);
 
-    changeLevelEffect(sliderCount);
+    changeLevelEffect(sliderCountValue);
   };
 
   var changeLevelEffect = function (count) {
