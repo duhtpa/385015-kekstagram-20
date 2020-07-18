@@ -9,6 +9,11 @@
   var HASHTAGS_MAX_COUNT = 5;
   var DESCRIPTION_MAX_SYMBOLS_COUNT = 140;
 
+  var resetValidity = function (evt) {
+    evt.target.setCustomValidity('');
+    evt.target.style.border = '';
+  };
+
   inputDescription.addEventListener('input', function (evt) {
     if (inputDescription.value.length > DESCRIPTION_MAX_SYMBOLS_COUNT) {
       evt.target.setCustomValidity('Комментарий не может быть длинее 140 символов');
@@ -17,8 +22,7 @@
       return;
     }
 
-    evt.target.setCustomValidity('');
-    evt.target.style.border = '';
+    resetValidity(evt);
   });
 
   inputHashtag.addEventListener('input', function (evt) {
@@ -27,9 +31,8 @@
     for (var i = 0; i < hashtagsArray.length; i++) {
       var hashtag = hashtagsArray[i];
 
-      if (!hashtag.match(/^([#])([0-9a-zA-Zа-яёА-ЯЁ]{1,19})$/g)) {
-        evt.target.setCustomValidity('Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д.');
-        setBorderError(evt.target);
+      if (inputHashtag .value < 1) {
+        resetValidity(evt);
 
         return;
       }
@@ -69,8 +72,14 @@
         return;
       }
 
-      evt.target.setCustomValidity('');
-      evt.target.style.border = '';
+      if (!hashtag.match(/^([#])([0-9a-zA-Zа-яёА-ЯЁ]{1,19})$/g)) {
+        evt.target.setCustomValidity('Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д.');
+        setBorderError(evt.target);
+
+        return;
+      }
+
+      resetValidity(evt);
     }
   });
 
