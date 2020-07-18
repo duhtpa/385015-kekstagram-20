@@ -4,7 +4,7 @@
   var DEBOUNCE_INTERVAL = 500;
 
   var lastTimeout;
-  window.debounce = function (array, error) {
+  window.debounce = function (data, error) {
 
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
@@ -16,7 +16,7 @@
       if (message) {
         document.querySelector('body').removeChild(message);
       }
-      window.backend.load(array, error);
+      window.backend.load(data, error);
 
       lastTimeout = null;
     }, DEBOUNCE_INTERVAL);
