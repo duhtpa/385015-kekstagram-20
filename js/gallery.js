@@ -12,13 +12,14 @@
   var photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var waitingTemplate = document.querySelector('#messages').content.querySelector('.img-upload__message--loading');
 
   var getElement = function (template) {
     var element = template.cloneNode(true);
     return element;
   };
 
-  var renderSaveMessage = function (action, template) {
+  var renderMessage = function (action, template) {
     var fragment = document.createDocumentFragment();
     fragment.appendChild(action(template));
     sectionMain.appendChild(fragment);
@@ -31,11 +32,18 @@
   var removeMessageSave = function () {
     sectionMain.removeChild(sectionMain.lastChild);
     document.removeEventListener('keydown', onPopupEscPress);
+
+    var messageError = document.querySelector('div.message');
+    if (messageError) {
+      document.querySelector('body').removeChild(messageError);
+    }
   };
+
+  renderMessage(getElement, waitingTemplate);
 
   var saveSuccess = function () {
     resetUploadState();
-    renderSaveMessage(getElement, successTemplate);
+    renderMessage(getElement, successTemplate);
 
     var sectionSuccess = sectionMain.querySelector('section.success');
     sectionSuccess.querySelector('button').addEventListener('click', removeMessageSave);
@@ -49,10 +57,12 @@
 
   var saveError = function () {
     resetUploadState();
-    renderSaveMessage(getElement, errorTemplate);
+    renderMessage(getElement, errorTemplate);
     document.querySelector('.img-upload__overlay').classList.add('hidden');
 
     var sectionError = sectionMain.querySelector('section.error');
+    errorHandler('Файл не был отправлен. Возможно сервер не доступен...');
+
     sectionError.querySelector('button').addEventListener('click', removeMessageSave);
     sectionError.addEventListener('click', function (evt) {
       if (evt.target.classList.value === 'error') {

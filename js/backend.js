@@ -8,7 +8,8 @@
   var StatusCode = {
     OK: 200
   };
-  var TIMEOUT_IN_MS = 10000;
+  var TIMEOUT_IN_MS = 1000;
+  var sectionMain = document.querySelector('main');
 
   var isError = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -20,6 +21,7 @@
         onLoad(xhrResponse);
 
         document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+        sectionMain.removeChild(sectionMain.querySelector('.img-upload__message--loading'));
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
@@ -27,7 +29,8 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + ' секунд. Возможно сервер не доступен...');
+      sectionMain.removeChild(sectionMain.querySelector('.img-upload__message--loading'));
     });
 
     return xhr;
