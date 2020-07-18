@@ -16,20 +16,14 @@
     document.addEventListener('keydown', onPopupEscPress);
   };
 
-  var closePopup = function () { // сюда нужно дописать/переписать очитску элементов формы
-    // т.е наверное вынести closePopup в глоб.обл. видимости и в galery.js обращаться к ней при отправке данных, а здесь - при закрытии
+  var closePopup = function () {
     window.gallery.resetUploadState();
 
     popup.classList.add('hidden');
-    // document.querySelector('body').classList.remove('modal-open');
 
     document.removeEventListener('keydown', onPopupEscPress);
 
     btnOpenPopup.value = '';
-
-    // var popupPreview = document.querySelector('.img-upload__preview > img');
-    // popupPreview.removeAttribute('class');
-    // popupPreview.removeAttribute('style');
 
     document.querySelector('.img-upload__effect-level').classList.add('hidden');
   };

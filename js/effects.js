@@ -97,7 +97,5 @@
 
   window.effects = {
     changeLevelSlider: changeLevelSlider,
-    // levelSlider: LevelSlider,
-    // defaultPositionSlider: DEFAULT_POSITION_SLIDER
   };
 })();

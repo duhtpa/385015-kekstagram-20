@@ -13,12 +13,12 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-  var getElement = function (template) { // 3
+  var getElement = function (template) {
     var element = template.cloneNode(true);
     return element;
   };
 
-  var renderSaveMessage = function (action, template) { // 2
+  var renderSaveMessage = function (action, template) {
     var fragment = document.createDocumentFragment();
     fragment.appendChild(action(template));
     sectionMain.appendChild(fragment);
@@ -32,10 +32,10 @@
     sectionMain.removeChild(sectionMain.lastChild);
     document.removeEventListener('keydown', onPopupEscPress);
   };
-  //
+
   var saveSuccess = function () {
     resetUploadState();
-    renderSaveMessage(getElement, successTemplate); // 1
+    renderSaveMessage(getElement, successTemplate);
 
     var sectionSuccess = sectionMain.querySelector('section.success');
     sectionSuccess.querySelector('button').addEventListener('click', removeMessageSave);
@@ -46,7 +46,7 @@
     });
     document.addEventListener('keydown', onPopupEscPress);
   };
-  //
+
   var saveError = function () {
     resetUploadState();
     renderSaveMessage(getElement, errorTemplate);
@@ -61,7 +61,7 @@
     });
     document.addEventListener('keydown', onPopupEscPress);
   };
-  //
+
   var getPhotoElement = function (photo) {
     var photoElement = photoTemplate.cloneNode(true);
 
