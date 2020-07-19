@@ -17,16 +17,13 @@
   };
 
   var closePopup = function () {
+    window.gallery.resetUploadState();
+
     popup.classList.add('hidden');
-    document.querySelector('body').classList.remove('modal-open');
 
     document.removeEventListener('keydown', onPopupEscPress);
 
     btnOpenPopup.value = '';
-
-    var popupPreview = document.querySelector('.img-upload__preview > img');
-    popupPreview.removeAttribute('class');
-    popupPreview.removeAttribute('style');
 
     document.querySelector('.img-upload__effect-level').classList.add('hidden');
   };

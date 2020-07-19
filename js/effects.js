@@ -20,7 +20,8 @@
   var barEffectLevel = document.querySelector('.img-upload__effect-level');
   var sliderLine = document.querySelector('.effect-level__line');
   var sliderLevel = sliderLine.querySelector('.effect-level__depth');
-  var sliderCountValue = document.querySelector('.effect-level__value').value;
+  var sliderCount = document.querySelector('.effect-level__value');
+  var sliderCountValue = sliderCount.value;
   var sliderControl = document.querySelector('.effect-level__pin');
 
   var changeEffect = function (evt) {
@@ -70,6 +71,8 @@
     sliderCountValue = Math.round(sliderControl.offsetLeft / LevelSlider.MAX * ConvertLevelSlider.PERCENT);
 
     changeLevelEffect(sliderCountValue);
+
+    sliderCount.setAttribute('value', sliderCountValue);
   };
 
   var changeLevelEffect = function (count) {
@@ -93,6 +96,6 @@
   };
 
   window.effects = {
-    changeLevelSlider: changeLevelSlider
+    changeLevelSlider: changeLevelSlider,
   };
 })();
