@@ -15,18 +15,19 @@
       photoBig.querySelector('.social__caption').textContent = photo.description;
 
       btnMoreComments.removeEventListener('click', renderMoreComments);
+      btnMoreComments.removeEventListener('keydown', renderMoreCommentsByEnter);
 
       var closePopup = function () {
         photoBig.classList.add('hidden');
         photoBigClose.removeEventListener('click', closePopup);
         document.removeEventListener('keydown', closePopupEscPress);
         btnMoreComments.removeEventListener('click', renderMoreComments);
+        btnMoreComments.removeEventListener('keydown', renderMoreCommentsByEnter);
       };
 
       var closePopupEscPress = function (evt) {
         window.util.isEscEvent(evt, closePopup);
         btnMoreComments.removeEventListener('click', renderMoreComments);
-        btnMoreComments.removeEventListener('keydown', renderMoreCommentsByEnter);
       };
 
       btnMoreComments.classList.remove('hidden');
