@@ -26,6 +26,7 @@
       var closePopupEscPress = function (evt) {
         window.util.isEscEvent(evt, closePopup);
         btnMoreComments.removeEventListener('click', renderMoreComments);
+        btnMoreComments.removeEventListener('keydown', renderMoreCommentsByEnter);
       };
 
       btnMoreComments.classList.remove('hidden');
@@ -46,12 +47,21 @@
           renderComments(photo.comments.length, photo);
           btnMoreComments.classList.add('hidden');
           btnMoreComments.removeEventListener('click', renderMoreComments);
+          btnMoreComments.removeEventListener('keydown', renderMoreCommentsByEnter);
           counter = COUNTER_STEP;
+        }
+      };
+
+      var renderMoreCommentsByEnter = function (evt) {
+        if (evt.key === 'Enter') {
+          evt.preventDefault();
+          renderMoreComments();
         }
       };
 
       if (photo.comments.length >= counter) {
         btnMoreComments.addEventListener('click', renderMoreComments);
+        btnMoreComments.addEventListener('keydown', renderMoreCommentsByEnter);
       }
     }
   };
