@@ -60,7 +60,9 @@
     if (sliderControl.offsetLeft >= LevelSlider.MIN && sliderControl.offsetLeft <= LevelSlider.MAX) {
       sliderControl.style.left = (sliderControl.offsetLeft - shift.x) + 'px';
       sliderLevel.style.width = sliderLine - (sliderLine / sliderControl.offsetLeft);
-    } else if (sliderControl.offsetLeft < LevelSlider.MIN) {
+    }
+
+    if (sliderControl.offsetLeft < LevelSlider.MIN) {
       sliderControl.style.left = LevelSlider.MIN + 'px';
     } else if (sliderControl.offsetLeft > LevelSlider.MAX) {
       sliderControl.style.left = LevelSlider.MAX + 'px';
