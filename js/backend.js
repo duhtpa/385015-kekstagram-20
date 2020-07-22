@@ -21,16 +21,15 @@
         onLoad(xhrResponse);
 
         document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-        var loadingProcessMessage = sectionMain.querySelector('.img-upload__message--loading');
-        if (loadingProcessMessage) {
-          sectionMain.removeChild(loadingProcessMessage);
-        }
+
+        removeloadingProcessMessage();
       } else {
         onError(xhr.response);
       }
     });
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
+      removeloadingProcessMessage();
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
@@ -38,6 +37,13 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + ' секунд. Возможно сервер не доступен...');
       sectionMain.removeChild(sectionMain.querySelector('.img-upload__message--loading'));
     });
+
+    var removeloadingProcessMessage = function () {
+      var loadingProcessMessage = sectionMain.querySelector('.img-upload__message--loading');
+      if (loadingProcessMessage) {
+        sectionMain.removeChild(loadingProcessMessage);
+      }
+    };
 
     return xhr;
   };
