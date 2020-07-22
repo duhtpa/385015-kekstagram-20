@@ -26,8 +26,11 @@
           sectionMain.removeChild(loadingProcessMessage);
         }
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError(xhr.response);
       }
+    });
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
