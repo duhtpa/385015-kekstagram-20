@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var TIMEOUT_IN_MS = 10000;
   var Url = {
     FROM_LOAD: 'https://javascript.pages.academy/kekstagram/data',
     FROM_SAVE: 'https://javascript.pages.academy/kekstagram'
@@ -8,7 +9,6 @@
   var StatusCode = {
     OK: 200
   };
-  var TIMEOUT_IN_MS = 10000;
   var sectionMain = document.querySelector('main');
 
   var isError = function (onLoad, onError) {

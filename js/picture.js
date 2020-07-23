@@ -1,11 +1,10 @@
 'use strict';
 
 (function () {
+  var COUNTER_STEP = 5;
   var btnMoreComments = document.querySelector('.social__comments-loader');
   var photoBig = document.querySelector('.big-picture');
   var photoBigClose = photoBig.querySelector('.big-picture__cancel');
-
-  var COUNTER_STEP = 5;
 
   window.picture = {
     renderPhotoBig: function (photo) {

@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
-  var scaleValue = document.querySelector('.scale__control--value');
-  var scaleCountValue = scaleValue.value;
-  var popupPreview = document.querySelector('.img-upload__preview > img');
-
   var SCALE_STEP = 25;
   var SCALE_MIN = 25;
   var SCALE_MAX = 100;
+
+  var scaleValue = document.querySelector('.scale__control--value');
+  var scaleCountValue = scaleValue.value;
+  var popupPreview = document.querySelector('.img-upload__preview > img');
 
   scaleCountValue = SCALE_MAX;
 
