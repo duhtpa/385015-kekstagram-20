@@ -77,11 +77,11 @@
   };
 
   var removeDefaultComments = function (photoBigComments) {
-    var photoBigCommentsElements = photoBigComments.children;
+    var photoBigCommentsElements = Array.from(photoBigComments.children);
 
-    for (var i = photoBigCommentsElements.length - 1; i >= 0; i--) {
-      photoBigComments.removeChild(photoBigCommentsElements[i]);
-    }
+    photoBigCommentsElements.forEach(function (it) {
+      photoBigComments.removeChild(it);
+    });
   };
 
   var addCommentsFromPicture = function (counter, photoBigComments, photoArrayElement) {
