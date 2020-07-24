@@ -11,6 +11,8 @@
       if (evt.key === 'Escape') {
         action();
       }
-    }
+    },
+
+    sectionBody: document.querySelector('body')
   };
 })();

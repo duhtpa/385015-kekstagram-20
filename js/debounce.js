@@ -14,7 +14,7 @@
     var message = document.querySelector('.message');
     lastTimeout = window.setTimeout(function () {
       if (message) {
-        document.querySelector('body').removeChild(message);
+        window.util.sectionBody.removeChild(message);
       }
       window.backend.load(data, error);
 

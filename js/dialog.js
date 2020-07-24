@@ -6,16 +6,18 @@
   var btnClosePopup = document.querySelector('#upload-cancel');
 
   var onPopupEscPress = function (evt) {
+    document.querySelector('.img-upload__overlay').scrollTop = 0;
     window.util.isEscEvent(evt, closePopup);
   };
 
   var openPopup = function () {
     popup.classList.remove('hidden');
-    document.querySelector('body').classList.add('modal-open');
+    window.util.sectionBody.classList.add('modal-open');
 
     document.addEventListener('keydown', onPopupEscPress);
   };
 
+  var barEffectLevel = document.querySelector('.img-upload__effect-level');
   var closePopup = function () {
     window.gallery.resetUploadState();
 
@@ -25,7 +27,9 @@
 
     btnOpenPopup.value = '';
 
-    document.querySelector('.img-upload__effect-level').classList.add('hidden');
+    barEffectLevel.classList.add('hidden');
+
+    resetValidation();
   };
 
   btnOpenPopup.addEventListener('change', function () {
@@ -33,6 +37,7 @@
   });
 
   btnClosePopup.addEventListener('click', function () {
+    document.querySelector('.img-upload__overlay').scrollTop = 0;
     closePopup();
   });
 
@@ -48,5 +53,14 @@
       document.addEventListener('keydown', onPopupEscPress);
     });
   });
+
+  var inputHashtag = document.querySelector('.text__hashtags');
+  var inputDescription = document.querySelector('.text__description');
+  var resetValidation = function () {
+    inputHashtag.setCustomValidity('');
+    inputHashtag.style.border = '';
+    inputDescription.setCustomValidity('');
+    inputDescription.style.border = '';
+  };
 
 })();

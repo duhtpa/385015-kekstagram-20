@@ -1,8 +1,10 @@
 'use strict';
 
 (function () {
+  var DEFAULT_POSITION_SLIDER = '453px';
+
   var LevelSlider = {
-    DEFAULT: 20,
+    DEFAULT: 100,
     MAX: 453,
     MIN: 0
   };
@@ -12,8 +14,6 @@
     BRIGHTNESS: 2,
     PERCENT: 100
   };
-
-  var DEFAULT_POSITION_SLIDER = '90.6px';
 
   var effects = document.querySelectorAll('.effects__radio');
   var popupPreview = document.querySelector('.img-upload__preview > img');

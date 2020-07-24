@@ -10,6 +10,7 @@
     OK: 200
   };
   var sectionMain = document.querySelector('main');
+  var imgFilters = document.querySelector('.img-filters');
 
   var isError = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -20,13 +21,14 @@
         var xhrResponse = xhr.response;
         onLoad(xhrResponse);
 
-        document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+        imgFilters.classList.remove('img-filters--inactive');
 
         removeloadingProcessMessage();
       } else {
         onError(xhr.response);
       }
     });
+
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
       removeloadingProcessMessage();
