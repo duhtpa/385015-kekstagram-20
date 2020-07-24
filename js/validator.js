@@ -91,9 +91,9 @@
   var findDuplicateElements = function (hashtagsArray) {
     var findDublicate = false;
 
-    for (var i = 0; i < hashtagsArray.length - 1; i++) {
-      findDublicate = (hashtagsArray[i] === hashtagsArray[++i]) ? true : false;
-    }
+    hashtagsArray.forEach(function (item, index, arr) {
+      findDublicate = item === arr[index - 1] ? true : false;
+    });
 
     return findDublicate;
   };
