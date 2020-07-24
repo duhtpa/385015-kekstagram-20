@@ -1,13 +1,14 @@
 'use strict';
 
 (function () {
-  var inputHashtag = document.querySelector('.text__hashtags');
-  var inputDescription = document.querySelector('.text__description');
-
   var HASHTAGS_MIN_SYMBOLS_COUNT = 2;
   var HASHTAGS_MAX_SYMBOLS_COUNT = 20;
   var HASHTAGS_MAX_COUNT = 5;
   var DESCRIPTION_MAX_SYMBOLS_COUNT = 140;
+
+  var inputHashtag = document.querySelector('.text__hashtags');
+  var inputDescription = document.querySelector('.text__description');
+
 
   var resetValidity = function (evt) {
     evt.target.setCustomValidity('');
@@ -16,7 +17,7 @@
 
   inputDescription.addEventListener('input', function (evt) {
     if (inputDescription.value.length > DESCRIPTION_MAX_SYMBOLS_COUNT) {
-      evt.target.setCustomValidity('Комментарий не может быть длинее 140 символов');
+      evt.target.setCustomValidity('Комментарий не может быть длинее ' + DESCRIPTION_MAX_SYMBOLS_COUNT + ' символов');
       setBorderError(evt.target);
 
       return;
@@ -28,10 +29,10 @@
   inputHashtag.addEventListener('input', function (evt) {
     var hashtagsArray = evt.target.value.toLowerCase().split(' ').sort();
 
-    for (var i = 0; i < hashtagsArray.length; i++) {
-      var hashtag = hashtagsArray[i];
+    hashtagsArray.forEach(function (it) {
+      var hashtag = it;
 
-      if (inputHashtag .value < 1) {
+      if (inputHashtag.value < 1) {
         resetValidity(evt);
 
         return;
@@ -80,7 +81,7 @@
       }
 
       resetValidity(evt);
-    }
+    });
   });
 
   var setBorderError = function (element) {
@@ -89,12 +90,9 @@
 
   var findDuplicateElements = function (hashtagsArray) {
     var findDublicate = false;
+
     for (var i = 0; i < hashtagsArray.length - 1; i++) {
-      if (hashtagsArray[i] === hashtagsArray[++i]) {
-        findDublicate = true;
-      } else {
-        findDublicate = false;
-      }
+      findDublicate = (hashtagsArray[i] === hashtagsArray[++i]) ? true : false;
     }
 
     return findDublicate;

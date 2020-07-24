@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var TIMEOUT_IN_MS = 10000;
   var Url = {
     FROM_LOAD: 'https://javascript.pages.academy/kekstagram/data',
     FROM_SAVE: 'https://javascript.pages.academy/kekstagram'
@@ -8,7 +9,6 @@
   var StatusCode = {
     OK: 200
   };
-  var TIMEOUT_IN_MS = 10000;
   var sectionMain = document.querySelector('main');
 
   var isError = function (onLoad, onError) {
@@ -21,13 +21,15 @@
         onLoad(xhrResponse);
 
         document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-        var loadingProcessMessage = sectionMain.querySelector('.img-upload__message--loading');
-        if (loadingProcessMessage) {
-          sectionMain.removeChild(loadingProcessMessage);
-        }
+
+        removeloadingProcessMessage();
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError(xhr.response);
       }
+    });
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+      removeloadingProcessMessage();
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
@@ -35,6 +37,13 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + ' секунд. Возможно сервер не доступен...');
       sectionMain.removeChild(sectionMain.querySelector('.img-upload__message--loading'));
     });
+
+    var removeloadingProcessMessage = function () {
+      var loadingProcessMessage = sectionMain.querySelector('.img-upload__message--loading');
+      if (loadingProcessMessage) {
+        sectionMain.removeChild(loadingProcessMessage);
+      }
+    };
 
     return xhr;
   };
